@@ -11,3 +11,18 @@ function onOpen() {
     .addItem("Send Placement Emails", "sendBatchPlacementEmails")
     .addToUi();
 }
+
+// Audits student IDs and email formats, flagging errors in red
+function validateStudentRecords() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const lastRow = sheet.getLastRow();
+  
+  if (lastRow < 2) {
+    SpreadsheetApp.getUi().alert('No student data found to validate.');
+    return;
+  }
+
+// Grab the data 
+  const range = sheet.getRange(2, 1, lastRow - 1, 2);
+  const values = range.getValues();
+  const backgrounds = range.getBackgrounds();
